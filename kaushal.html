@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Kaushal Babu </title>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(135deg, #0d1b2a, #1b263b, #415a77);
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    .card {
+        text-align: center;
+        background: rgba(255, 255, 255, 0.08);
+        padding: 40px;
+        width: 90%;
+        max-width: 600px;
+        border-radius: 22px;
+        box-shadow: 0 0 35px rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(6px);
+        position: relative;
+    }
+
+    h1 {
+        font-size: 34px;
+        margin: 0 0 15px 0;
+        letter-spacing: 1px;
+    }
+
+    p{
+        font-size: 18px;
+        line-height: 1.6;
+        opacity: 0.95;
+    }
+
+    /* Surprise Button */
+    .btn {
+        margin-top: 25px;
+        padding: 14px 32px;
+        font-size: 18px;
+        background: #ffadad;
+        border: none;
+        color: #000;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: 0.3s;
+        font-weight: 600;
+    }
+    .btn:hover {
+        background: #ffd6d6;
+        transform: scale(1.05);
+    }
+
+    /* Hidden Surprise Message */
+    #surpriseMessage {
+        margin-top: 25px;
+        font-size: 18px;
+        line-height: 1.7;
+        display: none;
+        animation: fadeIn 1s ease forwards;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .from {
+        margin-top: 25px;
+        opacity: 0.9;
+        font-weight: 600;
+        font-size: 17px;
+    }
+
+    /* Balloons Animation */
+    .balloon {
+        position: absolute;
+        width: 55px;
+        height: 75px;
+        border-radius: 40px;
+        bottom: -150px;
+        opacity: 0.9;
+        animation: float 9s infinite ease-in-out;
+    }
+
+    .balloon:after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: -20px;
+        width: 2px;
+        height: 35px;
+        background: rgba(255,255,255,0.6);
+    }
+
+    .b1 { left: 10%; background: #ff9aa2; animation-duration: 10s; }
+    .b2 { left: 35%; background: #ffdac1; animation-duration: 12s; }
+    .b3 { left: 60%; background: #e2f0cb; animation-duration: 9s; }
+    .b4 { left: 80%; background: #b5ead7; animation-duration: 11s; }
+
+    @keyframes float {
+        0%   { transform: translateY(0) rotate(-6deg); opacity: 0; }
+        10%  { opacity: 1; }
+        50%  { transform: translateY(-450px) rotate(6deg); }
+        100% { transform: translateY(-900px) rotate(-4deg); opacity: 0; }
+    }
+</style>
+
+<script>
+    function showSurprise() {
+        document.getElementById("surpriseMessage").style.display = "block";
+    }
+</script>
+
+</head>
+<body>
+
+<div class="card">
+    <h1>🎉 Happy Birthday Kaushal 🎉</h1>
+
+    <p>Khushiyaan, safalta aur pyaar tumhaari zindagi ka hissa bane rahe.  
+    Aaj ka din tumhaare liye bahut special ho! 🎂✨</p>
+
+    <button class="btn" onclick="showSurprise()">🎁 Click for Surprise</button>
+
+    <!-- Hidden Message -->
+    <div id="surpriseMessage">
+        Kaushal, tum sirf ek dost nahi,  
+        ek inspiration ho, ek support ho…  
+        Aur tumhari dosti mere liye bohot special hai.  
+        Tumhaari life me har wo khushi aaye  
+        jiske tum sach me layak ho.  
+        Keep shining brother! 💙✨
+    </div>
+
+    <div class="from">— With love & respect,<br><b>Akshat Prince</b></div>
+
+    <!-- Balloons -->
+    <div class="balloon b1"></div>
+    <div class="balloon b2"></div>
+    <div class="balloon b3"></div>
+    <div class="balloon b4"></div>
+</div>
+
+</body>
+</html>
