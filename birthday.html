@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Happy Birthday — E-Card</title>
+<style>
+  :root{
+    --bg1:#0f172a; --bg2:#0b274a;
+    --card:#0f172a; --accent:#ffb86b;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%; margin:0; font-family: "Poppins", system-ui, sans-serif; -webkit-font-smoothing:antialiased;}
+  body{
+    background: radial-gradient(1200px 600px at 10% 10%, #10243a 0%, transparent 15%),
+                radial-gradient(900px 500px at 90% 90%, #1b2f4b 0%, transparent 12%),
+                linear-gradient(180deg,var(--bg1), #071225 80%);
+    color:#fff; display:flex; align-items:center; justify-content:center; padding:24px;
+  }
+
+  .card{
+    width:100%; max-width:920px; background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+    border:1px solid rgba(255,255,255,0.06); border-radius:18px; padding:28px; position:relative; overflow:hidden;
+    box-shadow: 0 10px 30px rgba(2,6,23,0.6);
+  }
+
+  header{
+    display:flex; gap:16px; align-items:center;
+  }
+  .avatar{
+    width:84px; height:84px; border-radius:16px; background:linear-gradient(135deg,#ffd6a5,#ffb4a2); display:flex;
+    align-items:center; justify-content:center; font-size:40px; color:#6a2c70; box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+  }
+  h1{margin:0; font-size:28px; letter-spacing: -0.5px;}
+  .sub{opacity:0.85; margin-top:6px; font-size:14px}
+
+  .main{
+    display:flex; gap:28px; margin-top:20px; align-items:flex-start;
+  }
+
+  .message{
+    flex:1; padding:18px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius:12px; border:1px solid rgba(255,255,255,0.03);
+  }
+  .message p{margin:0; font-size:18px; line-height:1.4}
+  .message .from{margin-top:12px; font-weight:600; font-size:15px; opacity:0.9}
+
+  .right{
+    width:260px; display:flex; flex-direction:column; gap:12px; align-items:center;
+  }
+
+  .surprise{
+    padding:12px 18px; border-radius:999px; cursor:pointer; border:none; font-weight:700;
+    background:linear-gradient(90deg,#ffb86b,#ff7aa2); color:#081526; font-size:15px; box-shadow: 0 8px 24px rgba(255,120,140,0.12);
+  }
+
+  .note{font-size:13px; opacity:0.85; text-align:center}
+
+  /* Floating balloons */
+  .balloon{
+    position:absolute; width:64px; height:90px; border-radius:40px; transform-origin:center bottom;
+    bottom:-140px; left:10%; opacity:0.95;
+    animation: floatUp 8s infinite ease-in-out;
+    display:flex; align-items:flex-end; justify-content:center;
+  }
+  .balloon:after{
+    content:""; position:absolute; left:50%; transform:translateX(-50%); bottom:-22px; width:2px; height:40px; background:rgba(255,255,255,0.06);
+  }
+  .b1{background:linear-gradient(180deg,#ff9a9e,#fecfef); animation-duration:9s; left:8%;}
+  .b2{background:linear-gradient(180deg,#a18cd1,#fbc2eb); animation-duration:10s; left:24%;}
+  .b3{background:linear-gradient(180deg,#fad0c4,#ffd1ff); animation-duration:8.5s; left:60%;}
+  .b4{background:linear-gradient(180deg,#fbc2eb,#a6c1ee); animation-duration:11s; left:78%;}
+
+  @keyframes floatUp{
+    0%{transform: translateY(0) rotate(-6deg) scale(0.95); opacity:0}
+    10%{opacity:1}
+    50%{transform: translateY(-420px) rotate(6deg) scale(1);}
+    100%{transform: translateY(-900px) rotate(-4deg) scale(0.95); opacity:0}
+  }
+
+  /* Confetti canvas covers card */
+  #confetti-canvas{ position:absolute; inset:0; pointer-events:none; z-index:8; }
+
+  /* Responsive */
+  @media (max-width:720px){
+    .main{flex-direction:column}
+    .right{width:100%}
+  }
+
+  /* small sparkle */
+  .sparkle{
+    position:absolute; width:8px; height:8px; border-radius:50%; background: rgba(255,255,255,0.9); filter: blur(0.6px);
+    animation: twinkle 2.2s infinite;
+    opacity:0.8;
+  }
+  @keyframes twinkle{
+    0%{transform:scale(0.7); opacity:0}
+    50%{transform:scale(1.2); opacity:1}
+    100%{transform:scale(0.7); opacity:0}
+  }
+</style>
+</head>
+<body>
+  <div class="card" role="region" aria-label="Birthday e-card">
+    <!-- decorative sparkles -->
+    <div class="sparkle" style="top:14px; left:18px; animation-delay:0.1s"></div>
+    <div class="sparkle" style="top:34px; right:26px; animation-delay:0.5s"></div>
+    <div class="sparkle" style="bottom:26px; left:120px; animation-delay:1.1s"></div>
+
+    <canvas id="confetti-canvas"></canvas>
+
+    <div class="balloon b1" aria-hidden="true"></div>
+    <div class="balloon b2" aria-hidden="true"></div>
+    <div class="balloon b3" aria-hidden="true"></div>
+    <div class="balloon b4" aria-hidden="true"></div>
+
+    <header>
+      <div class="avatar" id="avatar">🎉</div>
+      <div>
+        <h1 id="title">Happy Birthday, <span id="friendName">Best Friend</span>!</h1>
+        <div class="sub">Aaj ka din sirf tere liye — masti, cake aur surprises!</div>
+      </div>
+    </header>
+
+    <div class="main">
+      <div class="message" id="messageBox">
+        <p id="messageText">
+          Janmdin ki dher saari shubhkamnayein! Tum hamesha muskurate raho, sapne bade ho aur har din ek nayi khushi le ke aaye. Aaj ka din ekdum special bane — cake khaana mat bhoolna! 🎂✨
+        </p>
+        <div class="from" id="fromText">— Tumhara dost</div>
+      </div>
+
+      <div class="right">
+        <button class="surprise" id="surpriseBtn">🎂 Surprise! (Click)</button>
+        <div class="note">Click kar ke confetti aur cake dekho. Message, name aur sign yahan edit kar sakte ho.</div>
+        <div style="height:12px"></div>
+        <button id="customize" style="padding:8px 14px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.06);color:inherit;cursor:pointer">Customize text</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+/* ========== Customization (edit these variables to personalize) ========== */
+/* Change the values below to set your friend's name, message and signature */
+const FRIEND_NAME = "Amit";            // <-- friend name
+const MESSAGE_TEXT = "Janmdin mubarak ho! Teri zindagi khushiyon se bhari rahe. Aaj ka din mast jaaye, aur cake double ho 🎂🎉"; // <-- main message
+const SIGNATURE = "— Tera yaar, Akshat"; // <-- who it's from
+/* ====================================================================== */
+
+/* Apply custom text (no need to edit below) */
+document.getElementById('friendName').textContent = FRIEND_NAME;
+document.getElementById('messageText').textContent = MESSAGE_TEXT;
+document.getElementById('fromText').textContent = SIGNATURE;
+
+/* Confetti system (canvas) */
+const canvas = document.getElementById('confetti-canvas');
+const ctx = canvas.getContext('2d');
+let W = canvas.width = canvas.clientWidth;
+let H = canvas.height = canvas.clientHeight;
+window.addEventListener('resize', ()=>{ W = canvas.width = canvas.clientWidth; H = canvas.height = canvas.clientHeight; });
+
+function rand(min,max){ return Math.random()*(max-min)+min; }
+class Confetto {
+  constructor(x,y){
+    this.x = x; this.y = y;
+    this.size = rand(6,14);
+    this.color = hsl(${~~rand(0,360)}, 90%, 60%);
+    this.vx = rand(-3,3);
+    this.vy = rand(-8,-2);
+    this.rotation = rand(0,Math.PI*2);
+    this.vr = rand(-0.12,0.12);
+    this.life = 120 + ~~rand(0,80);
+  }
+  update(){
+    this.vy += 0.25; // gravity
+    this.x += this.vx;
+    this.y += this.vy;
+    this.rotation += this.vr;
+    this.life--;
+  }
+  draw(){
+    ctx.save();
+    ctx.translate(this.x, this.y);
+    ctx.rotate(this.rotation);
+    ctx.fillStyle = this.color;
+    ctx.fillRect(-this.size/2, -this.size/2, this.size, this.size*0.6);
+    ctx.restore();
+  }
+}
+let confetti = [];
+
+function spawnConfetti(centerX, centerY, count){
+  for(let i=0;i<count;i++){
+    confetti.push(new Confetto(centerX + rand(-40,40), centerY + rand(-20,20)));
+  }
+}
+
+function loop(){
+  ctx.clearRect(0,0,W,H);
+  for(let i=confetti.length-1;i>=0;i--){
+    const c = confetti[i];
+    c.update();
+    c.draw();
+    if(c.life<=0 || c.y>H+50) confetti.splice(i,1);
+  }
+  requestAnimationFrame(loop);
+}
+loop();
+
+/* Button interactions */
+const surpriseBtn = document.getElementById('surpriseBtn');
+surpriseBtn.addEventListener('click', (e)=>{
+  // spawn at center of card
+  const rect = document.querySelector('.card').getBoundingClientRect();
+  const cx = rect.left + rect.width/2 - canvas.getBoundingClientRect().left;
+  const cy = rect.top + rect.height/3 - canvas.getBoundingClientRect().top;
+  spawnConfetti(cx,cy,80);
+  // small duplicate spawns to make it fuller
+  setTimeout(()=>spawnConfetti(cx+40,cy+10,40),60);
+  setTimeout(()=>spawnConfetti(cx-60,cy+20,40),120);
+  // animate avatar puff
+  const avatar = document.getElementById('avatar');
+  avatar.style.transform = 'scale(1.18)';
+  avatar.style.transition = 'transform 260ms ease';
+  setTimeout(()=>{ avatar.style.transform='scale(1)'; },400);
+});
+
+/* Customize text button (quick inline prompts) */
+document.getElementById('customize').addEventListener('click', ()=>{
+  const newName = prompt("Friend ka naam daalo:", FRIEND_NAME) || FRIEND_NAME;
+  const newMsg = prompt("Message likho:", MESSAGE_TEXT) || MESSAGE_TEXT;
+  const newSign = prompt("Signature (from):", SIGNATURE) || SIGNATURE;
+  document.getElementById('friendName').textContent = newName;
+  document.getElementById('messageText').textContent = newMsg;
+  document.getElementById('fromText').textContent = newSign;
+  // update constants (so future prompt defaults use latest)
+  // (Not strictly necessary, but keeps UX consistent)
+});
+
+/* Small accessibility: allow keyboard Enter on Surprise */
+surpriseBtn.addEventListener('keydown', (ev)=>{
+  if(ev.key === 'Enter') surpriseBtn.click();
+});
+</script>
+</body>
+</html>
